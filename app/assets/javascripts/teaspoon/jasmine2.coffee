@@ -1,4 +1,5 @@
 #= require teaspoon/base/teaspoon
+#= require teaspoon/jasmine2/reporters/console
 #= require teaspoon/jasmine2/reporters/html
 
 unless jasmineRequire?
@@ -58,6 +59,10 @@ class Teaspoon.Spec
       {message: item.message, stack: item.stack}
 
 
+  getParents: ->
+    [new Teaspoon.Suite(@parent)]
+
+
   result: ->
     status: @status()
     skipped: @spec.status == "disabled"
@@ -71,11 +76,11 @@ class Teaspoon.Spec
 class Teaspoon.Suite
 
   constructor: (@suite) ->
-    @fullDescription = @suite.getFullName()
+    @fullDescription = @suite.fullName
     @description = @suite.description
     @link = "?grep=#{encodeURIComponent(@fullDescription)}"
-    @parent = @suite.parentSuite
-    @viewId = @suite.viewId
+    @parent = null
+    @viewId = @suite.id
 
 
 
