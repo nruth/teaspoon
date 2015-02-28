@@ -19,8 +19,6 @@ module Teaspoon
         server.start
       end
       wait_until_started(thread)
-
-      require 'pry'; binding.pry
     rescue => e
       raise Teaspoon::ServerException, "Cannot start server: #{e.message}"
     end

@@ -25,9 +25,6 @@ describe "Jasmine 2 Teaspoon.Runner", ->
         @reporterSpy = spyOn(Teaspoon.Reporters, "HTML").and.returnValue(@instance)
       @addReporterSpy = spyOn(@env, "addReporter")
 
-    it "sets the updateInterval", ->
-      expect(@env.updateInterval).toEqual(1000)
-
     it "adds the reporter to the env", ->
       @runner.setup()
       expect(@reporterSpy).toHaveBeenCalled()
