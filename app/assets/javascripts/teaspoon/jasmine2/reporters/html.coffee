@@ -9,6 +9,10 @@ class Teaspoon.Reporters.HTML extends Teaspoon.Reporters.HTML
     "jasmine #{jasmine.version}"
 
 
+  jasmineStarted: (result) ->
+    @reportRunnerStarting(total: result.totalSpecsDefined)
+
+
   suiteStarted: (result) ->
     if @currentSuite # suite already running, we're nested
       result.parent = @currentSuite
@@ -19,11 +23,7 @@ class Teaspoon.Reporters.HTML extends Teaspoon.Reporters.HTML
     @currentSuite = @currentSuite.parent
 
 
-  specStarted: (result) ->
-    result.parent = @currentSuite
-    @reportSpecStarting(result)
-
-
   specDone: (result) ->
     result.parent = @currentSuite
+    @reportSpecStarting(result) unless result.status == 'disabled'
     @reportSpecResults(result)

@@ -100,14 +100,3 @@ describe "Jasmine 2 Teaspoon.Suite", ->
       expect(suite.link).toBe("?grep=_full%20jasmine%20description_")
       expect(suite.parent).toBe(@mockParentSuite)
       expect(suite.viewId).toBe("42")
-
-    it "has a second it", ->
-      expect(true).toBe(false)
-
-  describe "a second describe", ->
-    it "has an it", ->
-      expect(true).toBe(false)
-
-    describe "yet another nested describe", ->
-      it "has an it", ->
-        expect(true).toBe(false)
