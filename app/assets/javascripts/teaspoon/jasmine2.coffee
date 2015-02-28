@@ -43,12 +43,12 @@ class Teaspoon.Runner extends Teaspoon.Runner
 
 class Teaspoon.Spec
 
-  constructor: (@spec, @suite) ->
+  constructor: (@spec) ->
     @fullDescription = @spec.fullName
     @description = @spec.description
     @link = "?grep=#{encodeURIComponent(@fullDescription)}"
-    @parent = @suite
-    @suiteName = @parent?.fullName || 'Unknown!?'
+    @parent = @spec.parent
+    @suiteName = @parent.fullName
     @viewId = @spec.id
     @pending = @spec.status == "pending"
 
@@ -60,7 +60,14 @@ class Teaspoon.Spec
 
 
   getParents: ->
-    [new Teaspoon.Suite(@parent)]
+    return @parents if @parents
+    @parents ||= []
+    parent = @parent
+    while parent
+      parent = new Teaspoon.Suite(parent)
+      @parents.unshift(parent)
+      parent = parent.parent
+    @parents
 
 
   result: ->
@@ -79,7 +86,7 @@ class Teaspoon.Suite
     @fullDescription = @suite.fullName
     @description = @suite.description
     @link = "?grep=#{encodeURIComponent(@fullDescription)}"
-    @parent = null
+    @parent = @suite.parent
     @viewId = @suite.id
 
 

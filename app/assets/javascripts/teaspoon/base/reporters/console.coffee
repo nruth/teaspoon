@@ -6,7 +6,6 @@ class Teaspoon.Reporters.Console
 
 
   reportRunnerStarting: (runner) ->
-    debugger
     @log
       type:  "runner"
       total: runner.total || runner.specs?().length || 0

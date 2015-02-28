@@ -23,26 +23,17 @@ class Teaspoon.Reporters.Console extends Teaspoon.Reporters.Console
       coverage: window.__coverage__
     Teaspoon.finished = true
 
+
   suiteStarted: (result) ->
+    if @currentSuite # suite already running, we're nested
+      result.parent = @currentSuite
     @currentSuite = result
 
 
+  suiteDone: (result) ->
+    @currentSuite = @currentSuite.parent
+
+
   specDone: (result) ->
+    result.parent = @currentSuite
     @reportSpecResults(result)
-
-
-  reportSpecResults: (spec) ->
-    @spec = new Teaspoon.Spec(spec, @currentSuite)
-    result = @spec.result()
-    return if result.skipped
-    @reportSuites()
-    switch result.status
-      when "pending" then @trackPending()
-      when "failed" then @trackFailure()
-      else
-        @log
-          type:    "spec"
-          suite:   @spec.suiteName
-          label:   @spec.description
-          status:  result.status
-          skipped: result.skipped

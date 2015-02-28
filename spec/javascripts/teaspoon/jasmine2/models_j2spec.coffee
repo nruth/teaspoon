@@ -15,6 +15,7 @@ describe "Jasmine 2 Teaspoon.Spec", ->
       failedExpectations: @mockFailedSpecs
       passedExpectations: @mockPassedSpecs
       pendingReason: ""
+      parent: @mockSuite
       status: "passed"
 
   describe "constructor", ->
@@ -42,7 +43,7 @@ describe "Jasmine 2 Teaspoon.Spec", ->
 
   describe "#getParents", ->
 
-    xit "gets the parent suites", ->
+    it "gets the parent suites", ->
       spec = new Teaspoon.Spec(@mockSpec)
       expect(spec.getParents()[0].fullDescription).toEqual("_full jasmine name_")
 
@@ -78,7 +79,7 @@ describe "Jasmine 2 Teaspoon.Spec", ->
 
 
 
-describe "Jasmine Teaspoon.Suite", ->
+describe "Jasmine 2 Teaspoon.Suite", ->
 
   beforeEach ->
     @mockParentSuite = {}
@@ -87,6 +88,7 @@ describe "Jasmine Teaspoon.Suite", ->
       fullName: "_full jasmine description_"
       description: "_jasmine_description_"
       failedExpectations: []
+      parent: @mockParentSuite
       status: "finished"
 
   describe "constructor", ->
@@ -96,5 +98,16 @@ describe "Jasmine Teaspoon.Suite", ->
       expect(suite.fullDescription).toBe("_full jasmine description_")
       expect(suite.description).toBe("_jasmine_description_")
       expect(suite.link).toBe("?grep=_full%20jasmine%20description_")
-      expect(suite.parent).toBe(null)
+      expect(suite.parent).toBe(@mockParentSuite)
       expect(suite.viewId).toBe("42")
+
+    it "has a second it", ->
+      expect(true).toBe(false)
+
+  describe "a second describe", ->
+    it "has an it", ->
+      expect(true).toBe(false)
+
+    describe "yet another nested describe", ->
+      it "has an it", ->
+        expect(true).toBe(false)
