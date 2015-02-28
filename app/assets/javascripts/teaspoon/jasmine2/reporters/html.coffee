@@ -13,6 +13,10 @@ class Teaspoon.Reporters.HTML extends Teaspoon.Reporters.HTML
     @reportRunnerStarting(total: result.totalSpecsDefined)
 
 
+  jasmineDone: ->
+    @reportRunnerResults()
+
+
   suiteStarted: (result) ->
     if @currentSuite # suite already running, we're nested
       result.parent = @currentSuite
@@ -23,7 +27,15 @@ class Teaspoon.Reporters.HTML extends Teaspoon.Reporters.HTML
     @currentSuite = @currentSuite.parent
 
 
+  specStarted: (result) ->
+    # Jasmine 2 reports the spec starting even though it may
+    # be filtered out, but there's no way to tell.
+    # TODO: Is there a way to clean this up?
+    if jasmine.getEnv().specFilter(getFullName: -> result.fullName)
+      result.parent = @currentSuite
+      @reportSpecStarting(result)
+
+
   specDone: (result) ->
     result.parent = @currentSuite
-    @reportSpecStarting(result) unless result.status == 'disabled'
     @reportSpecResults(result)
