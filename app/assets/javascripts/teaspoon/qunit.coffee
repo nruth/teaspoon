@@ -24,7 +24,7 @@ class Teaspoon.Spec
     @description = "#{@spec.name} (#{@spec.failed}, #{@spec.passed}, #{@spec.total})"
     grepQueryString = "grep=#{encodeURIComponent("#{@spec.module}: #{@spec.name}")}"
     @link = if Teaspoon.params.file?
-      "?#{encodeURIComponent(Teaspoon.params.file)}&#{grepQueryString}"
+      "?file=#{encodeURIComponent(Teaspoon.params.file)}&#{grepQueryString}"
     else
       "?#{grepQueryString}"
     @parent = if @spec.module then new Teaspoon.Suite({description: @spec.module}) else null

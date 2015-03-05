@@ -1320,7 +1320,7 @@
       this.fullDescription = this.spec.module + " " + this.spec.name;
       this.description = this.spec.name + " (" + this.spec.failed + ", " + this.spec.passed + ", " + this.spec.total + ")";
       grepQueryString = "grep=" + (encodeURIComponent(this.spec.module + ": " + this.spec.name));
-      this.link = typeof fileQueryString !== "undefined" && fileQueryString !== null ? "?" + (encodeURIComponent(Teaspoon.params.file)) + "&" + grepQueryString : "?" + grepQueryString;
+      this.link = typeof fileQueryString !== "undefined" && fileQueryString !== null ? "?file=" + (encodeURIComponent(Teaspoon.params.file)) + "&" + grepQueryString : "?" + grepQueryString;
       this.parent = this.spec.module ? new Teaspoon.Suite({
         description: this.spec.module
       }) : null;
