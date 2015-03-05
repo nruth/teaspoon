@@ -22,7 +22,11 @@ class Teaspoon.Spec
   constructor: (@spec) ->
     @fullDescription = "#{@spec.module} #{@spec.name}"
     @description = "#{@spec.name} (#{@spec.failed}, #{@spec.passed}, #{@spec.total})"
-    @link = "?grep=#{encodeURIComponent("#{@spec.module}: #{@spec.name}")}"
+    grepQueryString = "grep=#{encodeURIComponent("#{@spec.module}: #{@spec.name}")}"
+    @link = if Teaspoon.params.file?
+      "?#{encodeURIComponent(Teaspoon.params.file)}&#{grepQueryString}"
+    else
+      "?#{grepQueryString}"
     @parent = if @spec.module then new Teaspoon.Suite({description: @spec.module}) else null
     @suiteName = @spec.module
     @viewId = @spec.viewId
